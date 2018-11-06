@@ -1,0 +1,23 @@
+version: '2'
+services:
+  talk:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - redis-talk
+    environment:
+      - NODE_ENV=development
+      - TALK_MONGO_URL=mongodb://mongo/talk
+      - TALK_REDIS_URL=redis://redis-talk
+      - TALK_ROOT_URL=http://127.0.0.1:3000
+      - TALK_PORT=3000
+      - TALK_JWT_SECRET=password
+  mongo:
+    image: mongo:latest
+    restart: always
+  redis-talk:
+    image: redis:latest
+    restart: always
